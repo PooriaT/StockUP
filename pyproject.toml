@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "stockup"
+version = "0.1.0"
+description = ""
+authors = ["PooriaT <pooria_taghdiri@hotmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.12.5"
+streamlit = "^1.38.0"
+google-generativeai = "^0.8.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
