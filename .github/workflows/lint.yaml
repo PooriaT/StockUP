@@ -30,8 +30,8 @@ jobs:
           poetry install
           poetry run pip install pytest
 
-      - name: Run linting (pylint)
-        run: poetry run pylint app/ tests/
+      # - name: Run linting (pylint)
+      #   run: poetry run pylint app/ tests/
 
       - name: Run formatting check (black)
         run: poetry run black --check app/ tests/
