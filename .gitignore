@@ -1,3 +1,6 @@
+# test will be excluded from main branch
+test/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
