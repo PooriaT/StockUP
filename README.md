@@ -14,34 +14,53 @@ poetry run pylint .
 
 
 stockup/
-├── app/
-│   ├── __init__.py
-│   ├── main.py                  # Main Streamlit entry point
-│   ├── pages/
-│   │   └── page1.py             # Additional Streamlit pages
-│   ├── components/
-│   │   └── header.py            # Reusable UI components
-│   └── utils/
-│       └── data_loader.py       # Utility functions
-├── config/
-│   ├── config.toml              # Global app settings
-│   └── secrets.toml             # API keys, sensitive info
-├── static/
-│   ├── css/
-│   │   └── styles.css           # CSS files
-│   ├── img/
-│   │   └── logo.png             # Image assets
-│   └── js/
-│       └── script.js            # Optional JS files
-├── tests/
-│   ├── unit/
-│   │   └── test_components.py   # Unit tests
-│   └── integration/
-│       └── test_pages.py        # Integration tests
-├── data/
-│   └── sample_data.csv          # Data used by the app
-├── .streamlit/
-│   └── config.toml              # Streamlit server config
+├── app
+│   ├── apis
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-312.pyc
+│   │   │   └── stock_info.cpython-312.pyc
+│   │   └── stock_info.py
+│   ├── components
+│   │   └── __init__.py
+│   ├── __init__.py
+│   ├── main.py
+│   ├── pages
+│   │   ├── about.py
+│   │   ├── home.py
+│   │   ├── __init__.py
+│   │   └── __pycache__
+│   │       ├── about.cpython-312.pyc
+│   │       ├── app.cpython-312.pyc
+│   │       ├── home.cpython-312.pyc
+│   │       └── __init__.cpython-312.pyc
+│   ├── __pycache__
+│   │   └── __init__.cpython-312.pyc
+│   └── utils
+│       └── __init__.py
+├── config
+│   ├── config.toml
+│   └── secrets.toml
+├── Dockerfile
 ├── poetry.lock
 ├── pyproject.toml
-└── README.md
+├── pytest.ini
+├── README.md
+├── static
+│   └── img
+└── test
+    ├── integration
+    └── unit
+        ├── apis
+        │   ├── __pycache__
+        │   │   └── test_stock_info.cpython-312-pytest-8.3.3.pyc
+        │   └── test_stock_info.py
+        └── pages
+            └── __pycache__
+                └── test_home.cpython-312-pytest-8.3.3.pyc
+
+
+
+
+docker build -t stockup-app .
+docker run -p 8501:8501 stockup-app
