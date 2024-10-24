@@ -1,5 +1,5 @@
 import streamlit as st
-from apis import stock_info
+from apis import stock_info, gemini
 import datetime
 
 
@@ -7,11 +7,10 @@ def home_page():
     st.title("Stock Dashboard")
     symbol = st.text_input("Enter stock symbol:", "AAPl")
     stock = stock_info.StockInfo(symbol)
+    stock_general_info = stock.get_general_info()
 
-    if symbol:
+    if "longName" in stock_general_info:
         st.header("General Information")
-
-        stock_general_info = stock.get_general_info()
 
         st.write(f"**Company Name:** {stock_general_info['longName']}")
         st.write(f"**Country:** {stock_general_info['country']}")
@@ -78,36 +77,36 @@ def home_page():
 
         st.header("Historical Data")
         (
-            hist_tab1D,
-            hist_tab5D,
-            hist_tab1M,
-            hist_tab6M,
-            hist_tab1Y,
-            hist_tab5Y,
-            hist_tabAll,
+            hist_tab_1d,
+            hist_tab_5d,
+            hist_tab_1m,
+            hist_tab_6m,
+            hist_tab_1y,
+            hist_tab_5y,
+            hist_tab_all,
         ) = st.tabs(["1D", "5D", "1M", "6M", "1Y", "5Y", "All"])
-        with hist_tab1D:
-            hist_1D = stock.get_historical_data(period="1d", interval="1m")
-            st.line_chart(hist_1D["Close"], width=0, height=0, use_container_width=True)
-        with hist_tab5D:
-            hist_5D = stock.get_historical_data(period="5d", interval="30m")
-            st.line_chart(hist_5D["Close"], width=0, height=0, use_container_width=True)
-        with hist_tab1M:
-            hist_1M = stock.get_historical_data(period="1mo", interval="1d")
-            st.line_chart(hist_1M["Close"], width=0, height=0, use_container_width=True)
-        with hist_tab6M:
-            hist_6M = stock.get_historical_data(period="6mo", interval="5d")
-            st.line_chart(hist_6M["Close"], width=0, height=0, use_container_width=True)
-        with hist_tab1Y:
-            hist_1Y = stock.get_historical_data(period="1y", interval="1wk")
-            st.line_chart(hist_1Y["Close"], width=0, height=0, use_container_width=True)
-        with hist_tab5Y:
-            hist_5Y = stock.get_historical_data(period="5y", interval="1mo")
-            st.line_chart(hist_5Y["Close"], width=0, height=0, use_container_width=True)
-        with hist_tabAll:
-            hist_All = stock.get_historical_data(period="max", interval="3mo")
+        with hist_tab_1d:
+            hist_1d = stock.get_historical_data(period="1d", interval="1m")
+            st.line_chart(hist_1d["Close"], width=0, height=0, use_container_width=True)
+        with hist_tab_5d:
+            hist_5d = stock.get_historical_data(period="5d", interval="30m")
+            st.line_chart(hist_5d["Close"], width=0, height=0, use_container_width=True)
+        with hist_tab_1m:
+            hist_1m = stock.get_historical_data(period="1mo", interval="1d")
+            st.line_chart(hist_1m["Close"], width=0, height=0, use_container_width=True)
+        with hist_tab_6m:
+            hist_6m = stock.get_historical_data(period="6mo", interval="5d")
+            st.line_chart(hist_6m["Close"], width=0, height=0, use_container_width=True)
+        with hist_tab_1y:
+            hist_1y = stock.get_historical_data(period="1y", interval="1wk")
+            st.line_chart(hist_1y["Close"], width=0, height=0, use_container_width=True)
+        with hist_tab_5y:
+            hist_5y = stock.get_historical_data(period="5y", interval="1mo")
+            st.line_chart(hist_5y["Close"], width=0, height=0, use_container_width=True)
+        with hist_tab_all:
+            hist_all = stock.get_historical_data(period="max", interval="3mo")
             st.line_chart(
-                hist_All["Close"], width=0, height=0, use_container_width=True
+                hist_all["Close"], width=0, height=0, use_container_width=True
             )
 
         news_container = st.header("News")
@@ -120,8 +119,21 @@ def home_page():
             )
             news_container.write(f"[Read more]({item['link']})")
             news_container.write("_" * 50)
+
+        st.header("AI Response")
+        response_placeholder = st.empty()
+        with st.spinner("Generating story..."):
+            story = gemini.get_gemini_response(
+                symbol,
+                stock_general_info,
+                stock.get_historical_data(period="1y", interval="1wk"),
+                stock.get_news(),
+            )
+
+        response_placeholder.write(story)
+
     else:
-        st.write("Please enter a stock symbol to get the information.")
+        st.write("Please enter a valid stock symbol to get the information.")
 
 
 home_page()
