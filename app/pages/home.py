@@ -1,5 +1,5 @@
 import streamlit as st
-from apis import stock_info, gemini
+from apis import stock_info
 import datetime
 
 
@@ -119,18 +119,6 @@ def home_page():
             )
             news_container.write(f"[Read more]({item['link']})")
             news_container.write("_" * 50)
-
-        st.header("AI Response")
-        response_placeholder = st.empty()
-        with st.spinner("Generating story..."):
-            story = gemini.get_gemini_response(
-                symbol,
-                stock_general_info,
-                stock.get_historical_data(period="1y", interval="1wk"),
-                stock.get_news(),
-            )
-
-        response_placeholder.write(story)
 
     else:
         st.write("Please enter a valid stock symbol to get the information.")
