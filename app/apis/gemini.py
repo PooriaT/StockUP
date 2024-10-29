@@ -10,7 +10,9 @@ model = genai.GenerativeModel(model_name="gemini-1.5-flash")
 
 def get_gemini_response(SYMBOL, stock_general_info, stock_history, stock_news):
     prompt = f"""
-    You are an expert financial analyst and stock trader with deep knowledge of technical analysis, fundamental analysis, and market trends. Analyze the following stock data for {SYMBOL} and provide a comprehensive report and trading recommendation.
+    You are an expert financial analyst and stock trader with deep knowledge of technical analysis, 
+    fundamental analysis, and market trends. Analyze the following stock data for {SYMBOL} and 
+    provide a comprehensive report and trading recommendation.
     Stock Information:
     {stock_general_info}
     Historical Data:
@@ -74,8 +76,11 @@ def get_gemini_response(SYMBOL, stock_general_info, stock_history, stock_news):
 
 
 
-    Conclude your analysis with a summary of the most important points and any final thoughts or considerations for potential investors.
-    Remember to use clear, concise language and provide specific data points to support your analysis and recommendations. Your goal is to give a comprehensive yet actionable insight into the stock's potential performance.
+    Conclude your analysis with a summary of the most important points and any final thoughts or 
+    considerations for potential investors.
+    Remember to use clear, concise language and provide specific data points to support your analysis 
+    and recommendations. Your goal is to give a comprehensive yet actionable insight into the stock's potential 
+    performance.
     """
     response = model.generate_content(prompt)
     return response.text
