@@ -1,5 +1,6 @@
 import streamlit as st
 from apis import stock_info
+import plotly.graph_objects as go
 import datetime
 
 
@@ -87,27 +88,42 @@ def home_page():
         ) = st.tabs(["1D", "5D", "1M", "6M", "1Y", "5Y", "All"])
         with hist_tab_1d:
             hist_1d = stock.get_historical_data(period="1d", interval="1m")
-            st.line_chart(hist_1d["Close"], width=0, height=0, use_container_width=True)
+            fig = go.Figure(
+                data=[
+                    go.Candlestick(
+                        x=hist_1d.index,
+                        open=hist_1d["Open"],
+                        high=hist_1d["High"],
+                        low=hist_1d["Low"],
+                        close=hist_1d["Close"],
+                    )
+                ]
+            )
+            st.plotly_chart(fig, use_container_width=True)
         with hist_tab_5d:
             hist_5d = stock.get_historical_data(period="5d", interval="30m")
-            st.line_chart(hist_5d["Close"], width=0, height=0, use_container_width=True)
+            fig = go.Figure([go.Scatter(x=hist_5d.index, y=hist_5d["Close"])])
+            st.plotly_chart(fig, use_container_width=True)
         with hist_tab_1m:
             hist_1m = stock.get_historical_data(period="1mo", interval="1d")
-            st.line_chart(hist_1m["Close"], width=0, height=0, use_container_width=True)
+            fig = go.Figure([go.Scatter(x=hist_1m.index, y=hist_1m["Close"])])
+            st.plotly_chart(fig, use_container_width=True)
         with hist_tab_6m:
             hist_6m = stock.get_historical_data(period="6mo", interval="5d")
-            st.line_chart(hist_6m["Close"], width=0, height=0, use_container_width=True)
+            fig = go.Figure([go.Scatter(x=hist_6m.index, y=hist_6m["Close"])])
+            st.plotly_chart(fig, use_container_width=True)
         with hist_tab_1y:
             hist_1y = stock.get_historical_data(period="1y", interval="1wk")
-            st.line_chart(hist_1y["Close"], width=0, height=0, use_container_width=True)
+            fig = go.Figure([go.Scatter(x=hist_1y.index, y=hist_1y["Close"])])
+            st.plotly_chart(fig, use_container_width=True)
         with hist_tab_5y:
             hist_5y = stock.get_historical_data(period="5y", interval="1mo")
-            st.line_chart(hist_5y["Close"], width=0, height=0, use_container_width=True)
+            fig = go.Figure([go.Scatter(x=hist_5y.index, y=hist_5y["Close"])])
+            st.plotly_chart(fig, use_container_width=True)
         with hist_tab_all:
             hist_all = stock.get_historical_data(period="max", interval="3mo")
-            st.line_chart(
-                hist_all["Close"], width=0, height=0, use_container_width=True
-            )
+            fig = go.Figure([go.Scatter(x=hist_all.index, y=hist_all["Close"])])
+            st.plotly_chart(fig, use_container_width=True)
 
         news_container = st.header("News")
         news_container = st.container()
