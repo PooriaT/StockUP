@@ -1,6 +1,12 @@
 import streamlit as st
 
 if __name__ == "__main__":
+    st.set_page_config(
+        page_title="StockUP",
+        page_icon="📈",
+        layout="wide",
+        initial_sidebar_state="expanded",
+    )
     home_page = st.Page("pages/home.py", title="HOME", icon=":material/home:")
     ai_analysis_page = st.Page(
         "pages/ai_analysis.py", title="AI ANALYSIS", icon=":material/science:"
