@@ -6,7 +6,10 @@ import datetime
 
 def home_page():
     st.title("Stock Dashboard")
-    symbol = st.text_input("Enter stock symbol:", "AAPl")
+    if "stock_symbol" not in st.session_state:
+        st.session_state.stock_symbol = "AAPL"
+    symbol = st.text_input("Enter stock symbol:", st.session_state.stock_symbol)
+    st.session_state.stock_symbol = symbol
     stock = stock_info.StockInfo(symbol)
     stock_general_info = stock.get_general_info()
 

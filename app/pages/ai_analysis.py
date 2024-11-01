@@ -4,7 +4,10 @@ from apis import stock_info, gemini
 
 def ai_analysis_page():
     st.title("AI Analysis")
-    symbol = st.text_input("Enter stock symbol:", "AAPL")
+    if "stock_symbol" not in st.session_state:
+        st.session_state.stock_symbol = "AAPL"
+    symbol = st.text_input("Enter stock symbol:", st.session_state.stock_symbol)
+    st.session_state.stock_symbol = symbol
     stock = stock_info.StockInfo(symbol)
     stock_general_info = stock.get_general_info()
     if "longName" in stock_general_info:
