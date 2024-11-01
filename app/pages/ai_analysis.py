@@ -1,13 +1,11 @@
 import streamlit as st
 from apis import stock_info, gemini
+from utils import session, invalid_data
 
 
 def ai_analysis_page():
     st.title("AI Analysis")
-    if "stock_symbol" not in st.session_state:
-        st.session_state.stock_symbol = "AAPL"
-    symbol = st.text_input("Enter stock symbol:", st.session_state.stock_symbol)
-    st.session_state.stock_symbol = symbol
+    symbol = session.set_session_state()
     stock = stock_info.StockInfo(symbol)
     stock_general_info = stock.get_general_info()
     if "longName" in stock_general_info:
@@ -22,7 +20,7 @@ def ai_analysis_page():
 
         response_placeholder.write(story)
     else:
-        st.write("Please enter a valid stock symbol to get the information.")
+        invalid_data.invalid_stock_symbol()
 
 
 ai_analysis_page()
