@@ -10,15 +10,24 @@ def ai_analysis_page():
     stock_general_info = stock.get_general_info()
     if "longName" in stock_general_info:
         response_placeholder = st.empty()
-        with st.spinner("Generating analysis..."):
-            story = gemini.get_gemini_response(
-                symbol,
-                stock_general_info,
-                stock.get_historical_data(period="1y", interval="5d"),
-                stock.get_news(),
-            )
+        # with st.spinner("Generating analysis..."):
+        #     story = gemini.get_gemini_response(
+        #         symbol,
+        #         stock_general_info,
+        #         stock.get_historical_data(period="1y", interval="5d"),
+        #         stock.get_news(),
+        #     )
 
-        response_placeholder.write(story)
+        # response_placeholder.write(story)
+        with st.spinner("Generating analysis..."):
+            response_placeholder.write_stream(
+                gemini.get_gemini_response(
+                    symbol,
+                    stock_general_info,
+                    stock.get_historical_data(period="1y", interval="5d"),
+                    stock.get_news(),
+                )
+            )
     else:
         invalid_data.invalid_stock_symbol()
 
