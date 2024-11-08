@@ -82,8 +82,6 @@ def get_gemini_response(SYMBOL, stock_general_info, stock_history, stock_news):
     and recommendations. Your goal is to give a comprehensive yet actionable insight into the stock's potential 
     performance.
     """
-    for chunk in model.generate_content(prompt, stream=True):
-        yield chunk.text
 
-    # response = model.generate_content(prompt)
-    # return response.text
+    response = model.generate_content(prompt)
+    return response.text
