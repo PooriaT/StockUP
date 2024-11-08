@@ -108,27 +108,27 @@ def stock_info_page():
             )
             st.plotly_chart(fig, use_container_width=True)
         with hist_tab_5d:
-            hist_5d = stock.get_historical_data(period="5d", interval="30m")
+            hist_5d = stock.get_historical_data(period="5d", interval="15m")
             fig = go.Figure([go.Scatter(x=hist_5d.index, y=hist_5d["Close"])])
             st.plotly_chart(fig, use_container_width=True)
         with hist_tab_1m:
-            hist_1m = stock.get_historical_data(period="1mo", interval="1d")
+            hist_1m = stock.get_historical_data(period="1mo", interval="1h")
             fig = go.Figure([go.Scatter(x=hist_1m.index, y=hist_1m["Close"])])
             st.plotly_chart(fig, use_container_width=True)
         with hist_tab_6m:
-            hist_6m = stock.get_historical_data(period="6mo", interval="5d")
+            hist_6m = stock.get_historical_data(period="6mo", interval="1d")
             fig = go.Figure([go.Scatter(x=hist_6m.index, y=hist_6m["Close"])])
             st.plotly_chart(fig, use_container_width=True)
         with hist_tab_1y:
-            hist_1y = stock.get_historical_data(period="1y", interval="1wk")
+            hist_1y = stock.get_historical_data(period="1y", interval="1d")
             fig = go.Figure([go.Scatter(x=hist_1y.index, y=hist_1y["Close"])])
             st.plotly_chart(fig, use_container_width=True)
         with hist_tab_5y:
-            hist_5y = stock.get_historical_data(period="5y", interval="1mo")
+            hist_5y = stock.get_historical_data(period="5y", interval="1d")
             fig = go.Figure([go.Scatter(x=hist_5y.index, y=hist_5y["Close"])])
             st.plotly_chart(fig, use_container_width=True)
         with hist_tab_all:
-            hist_all = stock.get_historical_data(period="max", interval="3mo")
+            hist_all = stock.get_historical_data(period="max", interval="1d")
             fig = go.Figure([go.Scatter(x=hist_all.index, y=hist_all["Close"])])
             st.plotly_chart(fig, use_container_width=True)
 
