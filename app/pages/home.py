@@ -1,7 +1,7 @@
-from math import e
 import streamlit as st
-from apis import stock_info
-from utils import session, invalid_data
+from components import top_companies_news
+from setup import environment
+import datetime
 
 
 def home_page():
@@ -26,31 +26,30 @@ def home_page():
     )
     st.write(
         """
-        First insert a stock symbol and get started.
+        LATEST NEWS OF TOP COMPANIES
         """
     )
 
-    symbol = session.set_session_state()
-    stock = stock_info.StockInfo(symbol)
-    stock_general_info = stock.get_general_info()
+    companies_news = top_companies_news.get_top_companies_news()
+    companies_list = environment.TOP_COMPANIES_LIST
+    number_of_companies = len(companies_list)
 
-    if "longName" in stock_general_info:
-        st.write(
-            """
-            Now you can navigate to StocK Information page to get the stock information. \n
-            [STOCK INFO](./stock_info) \n
-            or jump into AI Analysis page.\n
-            [AI ANALYSIS](./ai_analysis)
-            """
-        )
-    else:
-        invalid_data.invalid_stock_symbol()
+    tabs = st.tabs(companies_list)
 
-    st.write(
-        """
-        Refer to the [About page](./about) for more information.
-        """
-    )
+    for i in range(number_of_companies):
+        with tabs[i]:
+            # st.write(companies_news[companies_list[i]])
+            news_container = st.container()
+            for item in companies_news[companies_list[i]]:
+                news_container.subheader(item["title"])
+                if "thumbnail" in item:
+                    news_container.image(item["thumbnail"]["resolutions"][1]["url"])
+                news_container.write(f"Publisher: {item['publisher']}")
+                news_container.write(
+                    f"Published on: {datetime.datetime.fromtimestamp(item['providerPublishTime'])}"
+                )
+                news_container.write(f"[Read more]({item['link']})")
+                news_container.write("_" * 50)
 
 
 home_page()
