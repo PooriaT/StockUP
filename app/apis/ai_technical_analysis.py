@@ -8,7 +8,7 @@ genai.configure(api_key=os.environ["GEMINI_API_KEY"])
 model = genai.GenerativeModel(model_name="gemini-1.5-flash")
 
 
-def get_gemini_response(SYMBOL, stock_general_info, stock_history, stock_news):
+def get_ai_technical_analysis(SYMBOL, stock_general_info, stock_history, stock_news):
     prompt = f"""
     You are an expert financial analyst and stock trader with deep knowledge of technical analysis, 
     fundamental analysis, and market trends. Analyze the following stock data for {SYMBOL} and 

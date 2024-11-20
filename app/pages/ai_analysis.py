@@ -1,5 +1,6 @@
+from Projects.StockUP.app.apis import ai_technical_analysis
 import streamlit as st
-from apis import stock_info, gemini
+from apis import stock_info
 from utils import session, invalid_data
 
 
@@ -12,7 +13,7 @@ def ai_analysis_page():
         response_placeholder = st.empty()
         with st.spinner("Generating analysis..."):
             try:
-                story = gemini.get_gemini_response(
+                story = ai_technical_analysis.get_ai_technical_analysis(
                     symbol,
                     stock_general_info,
                     stock.get_historical_data(period="1y", interval="5d"),
