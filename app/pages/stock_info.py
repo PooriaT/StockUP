@@ -63,25 +63,34 @@ def stock_info_page():
         )
         finance_container.divider()
         fin_col11, fin_col12 = finance_container.columns(2)
-        fin_col11.write(
-            f"**Target High Price:** {stock_general_info['targetHighPrice']}"
-        )
-        fin_col11.write(f"**Target Low Price:** {stock_general_info['targetLowPrice']}")
-        fin_col11.write(
-            f"**Target Mean Price:** {stock_general_info['targetMeanPrice']}"
-        )
-        fin_col11.write(
-            f"**Target Median Price:** {stock_general_info['targetMedianPrice']}"
-        )
-        fin_col12.write(
-            f"**Recommendation Mean:** {stock_general_info['recommendationMean']}"
-        )
-        fin_col12.write(
-            f"**Recommendation Key:** {stock_general_info['recommendationKey']}"
-        )
-        fin_col12.write(
-            f"**Number of Analyst Opinions:** {stock_general_info['numberOfAnalystOpinions']}"
-        )
+        if "targetHighPrice" in stock_general_info:
+            fin_col11.write(
+                f"**Target High Price:** {stock_general_info['targetHighPrice']}"
+            )
+        if "targetLowPrice" in stock_general_info:
+            fin_col11.write(
+                f"**Target Low Price:** {stock_general_info['targetLowPrice']}"
+            )
+        if "targetMeanPrice" in stock_general_info:
+            fin_col11.write(
+                f"**Target Mean Price:** {stock_general_info['targetMeanPrice']}"
+            )
+        if "targetMedianPrice" in stock_general_info:
+            fin_col11.write(
+                f"**Target Median Price:** {stock_general_info['targetMedianPrice']}"
+            )
+        if "recommendationMean" in stock_general_info:
+            fin_col12.write(
+                f"**Recommendation Mean:** {stock_general_info['recommendationMean']}"
+            )
+        if "recommendationKey" in stock_general_info:
+            fin_col12.write(
+                f"**Recommendation Key:** {stock_general_info['recommendationKey']}"
+            )
+        if "numberOfAnalystOpinions" in stock_general_info:
+            fin_col12.write(
+                f"**Number of Analyst Opinions:** {stock_general_info['numberOfAnalystOpinions']}"
+            )
 
         st.header("Historical Data")
         (
