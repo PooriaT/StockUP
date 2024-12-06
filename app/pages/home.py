@@ -42,7 +42,7 @@ def home_page():
             news_container = st.container()
             for item in companies_news[companies_list[i]]:
                 news_container.subheader(item["title"])
-                if "thumbnail" in item:
+                if "thumbnail" in item and len(item["thumbnail"]["resolutions"]) > 1:
                     news_container.image(item["thumbnail"]["resolutions"][1]["url"])
                 news_container.write(f"Publisher: {item['publisher']}")
                 news_container.write(
