@@ -1,7 +1,8 @@
 import streamlit as st
-from components import top_companies_news
+from components import top_companies_info
 from setup import environment
 import datetime
+import plotly.graph_objects as go
 
 
 def home_page():
@@ -24,15 +25,74 @@ def home_page():
           recommendations based on the latest available data.
         """
     )
+
+    companies_news = top_companies_info.get_top_companies_news()
+    companies_historical_price = top_companies_info.get_top_companies_historical_price(
+        period="1y", interval="1d"
+    )
+    companies_list = environment.TOP_COMPANIES_LIST
+    number_of_companies = len(companies_list)
+    st.write(
+        """
+        PRICE CHART OF TOP COMPANIES
+        """
+    )
+
+    charts_container = st.container()
+    charts_columns = charts_container.columns(2)
+    for i in range(0, number_of_companies, 2):
+        with charts_columns[0]:
+            fig = go.Figure(
+                data=[
+                    go.Candlestick(
+                        x=companies_historical_price[companies_list[i]].index,
+                        open=companies_historical_price[companies_list[i]]["Open"],
+                        high=companies_historical_price[companies_list[i]]["High"],
+                        low=companies_historical_price[companies_list[i]]["Low"],
+                        close=companies_historical_price[companies_list[i]]["Close"],
+                    )
+                ]
+            )
+            fig.update_layout(
+                title=companies_list[i],
+                yaxis_title="Price (USD)",
+                xaxis_title="Date",
+            )
+
+            st.plotly_chart(fig, use_container_width=True)
+        if i + 1 < number_of_companies:
+            with charts_columns[1]:
+                fig = go.Figure(
+                    data=[
+                        go.Candlestick(
+                            x=companies_historical_price[companies_list[i + 1]].index,
+                            open=companies_historical_price[companies_list[i + 1]][
+                                "Open"
+                            ],
+                            high=companies_historical_price[companies_list[i + 1]][
+                                "High"
+                            ],
+                            low=companies_historical_price[companies_list[i + 1]][
+                                "Low"
+                            ],
+                            close=companies_historical_price[companies_list[i + 1]][
+                                "Close"
+                            ],
+                        )
+                    ]
+                )
+                fig.update_layout(
+                    title=companies_list[i + 1],
+                    yaxis_title="Price (USD)",
+                    xaxis_title="Date",
+                )
+                st.plotly_chart(fig, use_container_width=True)
+
     st.write(
         """
         LATEST NEWS OF TOP COMPANIES
         """
     )
-
-    companies_news = top_companies_news.get_top_companies_news()
-    companies_list = environment.TOP_COMPANIES_LIST
-    number_of_companies = len(companies_list)
 
     tabs = st.tabs(companies_list)
 
