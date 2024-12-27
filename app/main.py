@@ -11,11 +11,18 @@ if __name__ == "__main__":
     stock_info_page = st.Page(
         "pages/stock_info.py", title="Stock Information", icon=":material/query_stats:"
     )
-    ai_analysis_page = st.Page(
-        "pages/ai_analysis.py", title="AI ANALYSIS", icon=":material/science:"
+    general_ai_analysis_page = st.Page(
+        "pages/general_ai_analysis.py",
+        title="GENERAL AI ANALYSIS",
+        icon=":material/science:",
+    )
+    ai_chat_page = st.Page(
+        "pages/ai_chat.py", title="AI Chat", icon=":material/chat_bubble:"
     )
     about_page = st.Page(
         "pages/about.py", title="ABOUT", icon=":material/format_quote:"
     )
-    pg = st.navigation([home_page, stock_info_page, ai_analysis_page, about_page])
+    pg = st.navigation(
+        [home_page, stock_info_page, general_ai_analysis_page, ai_chat_page, about_page]
+    )
     pg.run()

@@ -1,5 +1,5 @@
 # Use the official Python image as the base image
-FROM python:3.12.7-slim
+FROM python:3.13.1-slim
 
 # Set environment variables to prevent Python from writing .pyc files and buffering stdout
 ENV PYTHONUNBUFFERED=1 \
