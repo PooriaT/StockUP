@@ -1,8 +1,8 @@
-import datetime
 import streamlit as st
 from apis import stock_info
 from utils import session, invalid_data
 import plotly.graph_objects as go
+from components import news_component
 
 
 def stock_info_page():
@@ -144,13 +144,7 @@ def stock_info_page():
         news_container = st.header("News")
         news_container = st.container()
         for item in stock.get_news():
-            news_container.subheader(item["title"])
-            news_container.write(f"Publisher: {item['publisher']}")
-            news_container.write(
-                f"Published on: {datetime.datetime.fromtimestamp(item['providerPublishTime'])}"
-            )
-            news_container.write(f"[Read more]({item['link']})")
-            news_container.write("_" * 50)
+            news_component.get_news_per_stock(news_container, item)
 
     else:
         invalid_data.invalid_stock_symbol()
