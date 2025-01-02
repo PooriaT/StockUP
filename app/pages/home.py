@@ -1,7 +1,6 @@
 import streamlit as st
-from components import top_companies_info
+from components import top_companies_info, news_component
 from setup import environment
-import datetime
 import plotly.graph_objects as go
 
 
@@ -98,18 +97,9 @@ def home_page():
 
     for i in range(number_of_companies):
         with tabs[i]:
-            # st.write(companies_news[companies_list[i]])
             news_container = st.container()
             for item in companies_news[companies_list[i]]:
-                news_container.subheader(item["title"])
-                if "thumbnail" in item and len(item["thumbnail"]["resolutions"]) > 1:
-                    news_container.image(item["thumbnail"]["resolutions"][1]["url"])
-                news_container.write(f"Publisher: {item['publisher']}")
-                news_container.write(
-                    f"Published on: {datetime.datetime.fromtimestamp(item['providerPublishTime'])}"
-                )
-                news_container.write(f"[Read more]({item['link']})")
-                news_container.write("_" * 50)
+                news_component.get_news_per_stock(news_container, item)
 
 
 home_page()
