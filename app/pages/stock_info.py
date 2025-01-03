@@ -20,12 +20,22 @@ def stock_info_page():
     if "longName" in stock_general_info:
         st.header("General Information")
 
-        st.write(f"**Company Name:** {stock_general_info['longName']}")
+        if (
+            "website" in stock_general_info
+            and stock_general_info["website"] is not None
+        ):
+            st.write(
+                f"**Company Name:** [{stock_general_info['longName']}]({stock_general_info['website']})"
+            )
+        else:
+            st.write(f"**Company Name:** {stock_general_info['longName']}")
         st.write(f"**Country:** {stock_general_info['country']}")
         st.write(f"**City:** {stock_general_info['city']}")
         st.write(f"**Industry:** {stock_general_info['industry']}")
         st.write(f"**Sector:** {stock_general_info['sector']}")
-        st.write(f"**Business Summary:** {stock_general_info['longBusinessSummary']}")
+        st.write(
+            f"**Business Summary:** \n\n{stock_general_info['longBusinessSummary']}"
+        )
         finance_container = st.container()
         finance_container.subheader("**Finance Information:**")
         finance_container.write(
@@ -36,10 +46,14 @@ def stock_info_page():
         fin_col01.write(f"**Open:** {stock_general_info['open']}")
         fin_col01.write(f"**Day Low:** {stock_general_info['dayLow']}")
         fin_col01.write(f"**Day High:** {stock_general_info['dayHigh']}")
-        fin_col01.write(f"**Volume:** {stock_general_info['volume']}")
-        fin_col01.write(f"**Average Volume:** {stock_general_info['averageVolume']}")
         fin_col01.write(
-            f"**Average Volume (10 days):** {stock_general_info['averageVolume10days']}"
+            f"**Volume:** {format(int(stock_general_info['volume']), ',d')}"
+        )
+        fin_col01.write(
+            f"**Average Volume:** {format(int(stock_general_info['averageVolume']), ',d')}"
+        )
+        fin_col01.write(
+            f"**Average Volume (10 days):** {format(int(stock_general_info['averageVolume10days']), ',d')}"
         )
         if "bid" in stock_general_info:
             fin_col01.write(
@@ -49,9 +63,21 @@ def stock_info_page():
             fin_col01.write(
                 f"**Ask:** {stock_general_info['ask']} * {stock_general_info['askSize']}"
             )
-        fin_col02.write(f"**Market Cap:** {stock_general_info['marketCap']}")
+        fin_col02.write(
+            f"**Market Cap:** {format(int(stock_general_info['marketCap']), ',d')}"
+        )
         fin_col02.write(f"**52 Week Low:** {stock_general_info['fiftyTwoWeekLow']}")
         fin_col02.write(f"**52 Week High:** {stock_general_info['fiftyTwoWeekHigh']}")
+        if (
+            "trailingPE" in stock_general_info
+            and stock_general_info["trailingPE"] is not None
+        ):
+            fin_col02.write(f"**Forward PE:** {stock_general_info['trailingPE']}")
+        if (
+            "forwardPE" in stock_general_info
+            and stock_general_info["forwardPE"] is not None
+        ):
+            fin_col02.write(f"**Forward PE:** {stock_general_info['forwardPE']}")
         fin_col02.write(f"**50 Day Average:** {stock_general_info['fiftyDayAverage']}")
         fin_col02.write(
             f"**200 Day Average:** {stock_general_info['twoHundredDayAverage']}"
@@ -59,7 +85,7 @@ def stock_info_page():
         fin_col02.write(f"**Currency:** {stock_general_info['currency']}")
         fin_col02.write(f"**Exchange:** {stock_general_info['exchange']}")
         fin_col02.write(
-            f"**Enterprise Value:** {stock_general_info['enterpriseValue']}"
+            f"**Enterprise Value:** {format(int(stock_general_info['enterpriseValue']), ',d')}"
         )
         finance_container.divider()
         fin_col11, fin_col12 = finance_container.columns(2)
