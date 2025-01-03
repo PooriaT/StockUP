@@ -1,11 +1,12 @@
 import google.generativeai as genai
 import dotenv
 import os
+from setup import environment
 
 dotenv.load_dotenv()
 genai.configure(api_key=os.environ["GEMINI_API_KEY"])
 
-model = genai.GenerativeModel(model_name="gemini-1.5-flash")
+model = genai.GenerativeModel(model_name=environment.GEMINI_MODEL_NAME)
 
 
 def get_gemini_response(SYMBOL, stock_general_info, stock_history, stock_news):
@@ -80,7 +81,9 @@ def get_gemini_response(SYMBOL, stock_general_info, stock_history, stock_news):
     considerations for potential investors.
     Remember to use clear, concise language and provide specific data points to support your analysis 
     and recommendations. Your goal is to give a comprehensive yet actionable insight into the stock's potential 
-    performance.
+    performance. 
+    At the end of the response, provide a declaimer that the analysis is for informational purposes only and 
+    should not be considered as financial advice. This last sentence should be written all letters in UPPERCASE.
     """
 
     response = model.generate_content(prompt)

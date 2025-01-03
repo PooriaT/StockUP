@@ -22,6 +22,9 @@ def about_page():
         """
     )
 
+    st.write(
+        "Report Issues: [GitHub Issue Tracker](https://github.com/PooriaT/StockUP/issues)"
+    )
     st.write("Project Link: [GitHub Repository](https://github.com/PooriaT/StockUP)")
     st.write(
         "Support the developer: [Buy me a Coffee](https://buymeacoffee.com/pooria7)"

@@ -16,7 +16,7 @@ def support_modal():
     )
     st.write(
         """
-        <div style="display: flex; align-items: center;">
+        <div style="display: flex; align-items: center; margine-top: 1rem; margin-bottom: 3rem;">
             <span style="margin-right: 1rem;">❤️</span>
             <span>
                 Follow the builder on X: <a href="https://x.com/PooriaTaghdiri" target="_blank">Pooria's X</a>
