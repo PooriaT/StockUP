@@ -23,7 +23,9 @@ def about_page():
     )
 
     st.write("Project Link: [GitHub Repository](https://github.com/PooriaT/StockUP)")
-    st.write("Support the developer: [Buy me a Book](https://buymeacoffee.com/pooria7)")
+    st.write(
+        "Support the developer: [Buy me a Coffee](https://buymeacoffee.com/pooria7)"
+    )
     st.write("Follow the builder on X: [Pooria's X](https://x.com/PooriaTaghdiri)")
 
 
