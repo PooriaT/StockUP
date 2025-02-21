@@ -337,3 +337,16 @@ Commit and push it to GitHub.
 4. Set the **Dockerfile path** to `backend/Dockerfile`.
 5. Set the **PORT** environment variable to `8000`.
 6. Deploy! 
+
+
+
+
+
+
+
+
+
+
+-----------
+npm run format
+npm run format:check
