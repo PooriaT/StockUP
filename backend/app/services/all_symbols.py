@@ -18,7 +18,3 @@ def get_all_symbols():
             list_of_stocks.append(stocks[i]["symbol"])
 
     return list_of_stocks
-
-
-if __name__ == "__main__":
-    print(get_all_symbols())

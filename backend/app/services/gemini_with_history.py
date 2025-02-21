@@ -1,12 +1,16 @@
-import google.generativeai as genai
+# import sys
+# import os
+
+# sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+
+from google import genai
 import dotenv
 import os
-from setup import environment
+from app.setup import environment
 
 dotenv.load_dotenv()
-genai.configure(api_key=os.environ["GEMINI_API_KEY"])
 
-model = genai.GenerativeModel(model_name=environment.GEMINI_MODEL_NAME)
+client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
 
 
 def get_gemini_response(
@@ -37,5 +41,7 @@ def get_gemini_response(
     should not be considered as financial advice. This last sentence should be written all letters in UPPERCASE.
     """
 
-    response = model.generate_content(prompt)
+    response = client.models.generate_content(
+        model=environment.GEMINI_MODEL_NAME, contents=prompt
+    )
     return response.text
