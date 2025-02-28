@@ -11,6 +11,7 @@
   <nav class:open={isMenuOpen} class="sidebar">
     <button class="menu-toggle" on:click={toggleMenu}>
       <span class="hamburger"></span>
+      <span class="visually-hidden">Toggle menu</span>
     </button>
 
     <div class="nav-items">
