@@ -1,7 +1,7 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import '../app.css';
-    import './home.css'; // Home-specific styles
+    import './home.css';
     import StockCharts from '$lib/components/StockCharts.svelte';
   
     let imgSrc = '/home_page_img_1.webp';
@@ -9,7 +9,6 @@
     let stock_history = new Map<string, any>();
     let stock_news = new Map<string, any>();
   
-    // Default selected company tab (AAPL)
     let selectedCompany = "AAPL";
   
     onMount(async () => {
@@ -55,7 +54,6 @@
       </div>
   
       <h2>Latest News</h2>
-      <!-- Tabs for each company -->
       <div class="tabs">
         {#each Array.from(stock_news.keys()) as company}
           <button
@@ -65,8 +63,7 @@
           </button>
         {/each}
       </div>
-  
-      <!-- News for the selected company -->
+
       {#if stock_news.has(selectedCompany)}
         <div class="news-container">
           {#each stock_news.get(selectedCompany) as item}

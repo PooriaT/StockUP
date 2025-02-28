@@ -26,6 +26,20 @@
                 data: date
             },
             yAxis: {},
+            dataZoom: [
+                {
+                type: 'inside',
+                start: 0,
+                end: 100
+                },
+                {
+                show: true,
+                type: 'slider',
+                top: '90%',
+                start: 50,
+                end: 100
+                }
+            ],
             series: [
                 {
                 type: 'candlestick',
