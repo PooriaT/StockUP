@@ -21,24 +21,24 @@
       </a>
 
       <a
-        href="/stock-information"
+        href="/stock_information"
         class="nav-item"
-        class:active={$page.url.pathname === '/stock-information'}
+        class:active={$page.url.pathname === '/stock_information'}
       >
         <span class="icon">📈</span>
         <span class="text">Stock Information</span>
       </a>
 
       <a
-        href="/general-ai-analysis"
+        href="/general_ai_analysis"
         class="nav-item"
-        class:active={$page.url.pathname === '/general-ai-analysis'}
+        class:active={$page.url.pathname === '/general_ai_analysis'}
       >
         <span class="icon">🤖</span>
         <span class="text">GENERAL AI ANALYSIS</span>
       </a>
 
-      <a href="/ai-chat" class="nav-item" class:active={$page.url.pathname === '/ai-chat'}>
+      <a href="/ai_chat" class="nav-item" class:active={$page.url.pathname === '/ai_chat'}>
         <span class="icon">💬</span>
         <span class="text">AI Chat</span>
       </a>

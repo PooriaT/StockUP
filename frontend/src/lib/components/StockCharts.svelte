@@ -19,13 +19,24 @@
             stock_history['High'][dates[i]]
             ]);
         }
-        let date = dates.map(d => d.split('T')[0]);
+        let date = dates.map(d => {
+            let [datePart, timePart] = d.split('T');
+            let [year, month, day] = datePart.split('-');
+            let [hour, minute, second] = timePart.split(':');
+            if (dates[0].split('T')[0] === dates[dates.length - 1].split('T')[0]) {
+                return `${year}-${month}-${day} ${hour}:${minute}`;
+            } else {
+                return `${year}-${month}-${day}`;
+            }
+        });
   
      const option = {
             xAxis: {
                 data: date
             },
-            yAxis: {},
+            yAxis: {
+                scale: true
+            },
             dataZoom: [
                 {
                 type: 'inside',
