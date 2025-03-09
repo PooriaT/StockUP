@@ -73,20 +73,3 @@
       </div>
     {/if}
 </div>
-
-<style>
-  .loading {
-    margin: 20px 0;
-    text-align: center;
-  }
-
-  .error {
-    color: red;
-    margin: 20px 0;
-  }
-
-  .analysis {
-    margin: 20px 0;
-    white-space: pre-wrap;
-  }
-</style>
