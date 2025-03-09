@@ -33,7 +33,7 @@
   <div class="search-bar">
     <input type="text" placeholder="Enter stock symbol" bind:value={symbol} on:keydown={(event) => { if (event.key === 'Enter') fetchStock(); }} />
   </div>
-  <!-- <pre>{JSON.stringify(stockData, null, 2)}</pre> -->
+
   {#if stockData}
   <!-- General Information -->
   <section class="section">
@@ -56,7 +56,6 @@
       <p><strong>Business Summary:</strong> {stockData.stock_general_info.longBusinessSummary}</p>
     </div>
   </section>
-
   <!-- Finance Information -->
   <section class="section">
     <h2>Finance Information</h2>
@@ -134,8 +133,7 @@
           {tab}
         </button>
       {/each}
-    </div>
-    
+    </div>  
     {#if activeTab === '1D'}
       <StockCharts stock_history={stockData.stock_history_1d} />
     {:else if activeTab === '5D'}
