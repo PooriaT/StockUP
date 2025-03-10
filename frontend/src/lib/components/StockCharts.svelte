@@ -1,7 +1,13 @@
 <script lang="ts">
     import { onMount, onDestroy } from 'svelte';
     import * as echarts from 'echarts';
-    export let stock_history: any;
+    interface StockHistory {
+        Open: Record<string, number>;
+        Close: Record<string, number>;
+        Low: Record<string, number>;
+        High: Record<string, number>;
+    }
+    export let stock_history: StockHistory;
     let chart: echarts.ECharts;
     const chartId = `chart-${Math.random().toString(36).substr(2, 9)}`;
 
@@ -22,7 +28,7 @@
         let date = dates.map(d => {
             let [datePart, timePart] = d.split('T');
             let [year, month, day] = datePart.split('-');
-            let [hour, minute, second] = timePart.split(':');
+            let [hour, minute] = timePart.split(':');
             if (dates[0].split('T')[0] === dates[dates.length - 1].split('T')[0]) {
                 return `${year}-${month}-${day} ${hour}:${minute}`;
             } else {
