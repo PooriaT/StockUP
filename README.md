@@ -350,3 +350,7 @@ Commit and push it to GitHub.
 -----------
 npm run format
 npm run format:check
+
+
+Lint:
+npm run lint
