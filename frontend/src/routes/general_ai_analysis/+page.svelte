@@ -1,15 +1,28 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { marked } from 'marked';
+  import DOMPurify from 'dompurify';
   import './general_ai_analysis.css';
   import '../../app.css';
 
+  interface AIResponse {
+        response: string;
+    }
+
+    interface StockInfo {
+        stock_general_info: {
+            longName: string;
+            [key: string]: unknown;
+        };
+    }
+
   let symbol = 'AAPL';
-  let aiResponse: any;
-  let aiResponseText: string | null = null;
+  let aiResponse: AIResponse | null = null;
+  let aiResponseText: string = '';
   let isLoading = false;
   let error: string | null = null;
-  let stockInfo: any = null;
+  let stockInfo: StockInfo | null = null;
+  let safeAIResponseText: string = '';
 
   async function fetchAIResponse() {
     error = null;
@@ -28,7 +41,8 @@
         throw new Error('Error fetching AI analysis');
       }
       aiResponse = await response.json();
-      aiResponseText = aiResponse.response;
+      aiResponseText = await marked.parse(aiResponse?.response || 'NO RESPONSE FROM AI');
+      safeAIResponseText = DOMPurify.sanitize(aiResponseText);
       
     } catch (err: unknown) {
       error = err instanceof Error ? err.message : 'An unexpected error occurred';
@@ -67,9 +81,10 @@
       </div>
     {/if}
 
-    {#if aiResponse && !isLoading && !error && stockInfo}
+    {#if aiResponse && !isLoading && !error && stockInfo && aiResponseText}
       <div class="analysis">
-        {@html marked.parse(aiResponseText || '')}
+        <!-- eslint-disable-next-line svelte/no-at-html-tags -->
+        {@html safeAIResponseText}
       </div>
     {/if}
 </div>

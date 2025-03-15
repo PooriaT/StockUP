@@ -3,18 +3,46 @@
     import '../app.css';
     import './home.css';
     import StockCharts from '$lib/components/StockCharts.svelte';
+
+    interface StockHistory {
+        Open: Record<string, number>;
+        Close: Record<string, number>;
+        Low: Record<string, number>;
+        High: Record<string, number>;
+        date: Record<string, string>;
+    }
+
+    interface NewsContent {
+        title: string;
+        provider: { displayName: string };
+        summary?: string;
+        pubDate: string;
+        clickThroughUrl?: { url: string };
+        thumbnail?: { resolutions: { url: string }[] };
+    }
+
+    interface NewsItem {
+        content: NewsContent;
+    }
+
+    interface AIResponse {
+      big_seven_info: Record<string, { 
+        stock_history: StockHistory,
+        stock_news: NewsItem[]
+       }>;
+    }
   
     let imgSrc = '/home_page_img_1.webp';
-    let data: any;
-    let stock_history = new Map<string, any>();
-    let stock_news = new Map<string, any>();
+    let data: AIResponse | null = null;
+    let stock_history = new Map<string, StockHistory>();
+    let stock_news = new Map<string, NewsItem[]>();
   
     let selectedCompany = "AAPL";
   
     onMount(async () => {
       const response = await fetch("http://0.0.0.0:8000/big_seven");
       data = await response.json();
-      for (const [key, value] of Object.entries(data.big_seven_info as Record<string, { stock_history: any, stock_news: any[] }>)) {
+      for (const [key, value] of Object.entries(data?.big_seven_info as Record<string, { stock_history: StockHistory, stock_news: NewsItem[] }>)) {
         stock_history.set(key, value.stock_history);
         stock_news.set(key, value.stock_news);
       }
@@ -45,7 +73,7 @@
     {#if data}
       <h2>Stock Data</h2>
       <div class="grid-container">
-        {#each Array.from(stock_history.entries()) as [key, value]}
+        {#each Array.from(stock_history.entries()) as [key, value] (key)}
           <div class="chart-item">
             <h3>{key}</h3>
             <StockCharts stock_history={value} />
@@ -55,7 +83,7 @@
   
       <h2>Latest News</h2>
       <div class="tabs">
-        {#each Array.from(stock_news.keys()) as company}
+        {#each Array.from(stock_news.keys()) as company (company)}
           <button
             class="tab-button {selectedCompany === company ? 'active' : ''}"
             on:click={() => selectedCompany = company}>
@@ -66,9 +94,9 @@
 
       {#if stock_news.has(selectedCompany)}
         <div class="news-container">
-          {#each stock_news.get(selectedCompany) as item}
+          {#each stock_news.get(selectedCompany) ?? [] as item (item.content.title)}
             <div class="news-card">
-              {#if item.content.thumbnail?.resolutions?.length > 1}
+              {#if item.content.thumbnail?.resolutions && item.content.thumbnail.resolutions.length > 1}
                 <img src={item.content.thumbnail.resolutions[1].url} alt={item.content.title} />
               {/if}
               <h4>{item.content.title}</h4>

@@ -4,8 +4,80 @@
   import './stock_information.css';
   import '../../app.css';
 
+  interface StockHistory {
+        Open: Record<string, number>;
+        Close: Record<string, number>;
+        Low: Record<string, number>;
+        High: Record<string, number>;
+        date: Record<string, string>;
+    }
+
+  interface StockData {
+    stock_general_info: {
+      website?: string;
+      longName: string;
+      country: string;
+      city: string;
+      industry: string;
+      sector: string;
+      longBusinessSummary: string;
+      currentPrice: number;
+      previousClose: number;
+      open: number;
+      dayLow: number;
+      dayHigh: number;
+      volume: number;
+      averageVolume: number;
+      averageVolume10days: number;
+      bid?: number;
+      ask?: number;
+      bidSize?: number;
+      askSize?: number;
+      marketCap: number;
+      fiftyTwoWeekLow: number;
+      fiftyTwoWeekHigh: number;
+      trailingPE?: number;
+      forwardPE?: number;
+      fiftyDayAverage: number;
+      twoHundredDayAverage: number;
+      currency: string;
+      exchange: string;
+      enterpriseValue: number;
+      targetHighPrice?: number;
+      targetLowPrice?: number;
+      targetMeanPrice?: number;
+      targetMedianPrice?: number;
+      recommendationMean?: number;
+      recommendationKey?: string;
+      numberOfAnalystOpinions?: number;
+    };
+    stock_history_1d: StockHistory;
+    stock_history_5d: StockHistory;
+    stock_history_1mo: StockHistory;           
+    stock_history_6mo: StockHistory;
+    stock_history_1y: StockHistory;
+    stock_history_5y: StockHistory;
+    stock_history_all: StockHistory;
+    stock_news: Array<{
+      content: {
+        title: string;
+        thumbnail?: {
+          resolutions: Array<{ url: string }>;
+        };
+        provider: {
+          displayName: string;
+        };
+        summary?: string;
+        pubDate: string;
+        clickThroughUrl?: {
+          url: string;
+        };
+      };
+    }>;
+  }
+
   let symbol = 'AAPL';
-  let stockData: any;
+  let stockData: StockData | null = null;
   let activeTab: string = '1D';
   const tabs = ['1D', '5D', '1M', '6M', '1Y', '5Y', 'All'];
 
@@ -125,7 +197,7 @@
   <section class="section">
     <h2>Historical Data</h2>
     <div class="tabs">
-      {#each tabs as tab}
+      {#each tabs as tab (tab)}
         <button 
           class:active={activeTab === tab}
           on:click={() => activeTab = tab}
@@ -154,10 +226,10 @@
   <section class="section">
     <h2>News</h2>
     <div class="news-container">
-      {#each stockData.stock_news as news}
+      {#each stockData.stock_news as news (news.content.title)}
         <div class="news-item">
           <h3>{news.content.title}</h3>
-          {#if news.content.thumbnail?.resolutions?.length > 1}
+          {#if news.content.thumbnail?.resolutions && news.content.thumbnail.resolutions.length > 1}
             <img src={news.content.thumbnail.resolutions[1].url} alt={news.content.title} />
           {/if}
           <p><strong>Publisher:</strong> {news.content.provider.displayName}</p>
