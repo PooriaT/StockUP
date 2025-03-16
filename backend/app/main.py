@@ -6,11 +6,14 @@ from app.setup import environment
 app = FastAPI()
 
 # CORS for frontend communication
+origins = [
+    "https://stockupforall.onrender.com",
+    "http://localhost:5173",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "https://stockupforall.onrender.com, http://localhost:5173"
-    ],  # Adjust this for deployment
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
