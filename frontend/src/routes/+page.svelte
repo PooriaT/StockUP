@@ -3,6 +3,7 @@
     import '../app.css';
     import './home.css';
     import StockCharts from '$lib/components/StockCharts.svelte';
+    import { BACKEND_API_BASE_URL } from '$lib/config';
 
     interface StockHistory {
         Open: Record<string, number>;
@@ -40,7 +41,7 @@
     let selectedCompany = "AAPL";
   
     onMount(async () => {
-      const response = await fetch("http://0.0.0.0:8000/big_seven");
+      const response = await fetch(`${BACKEND_API_BASE_URL}/big_seven`);
       data = await response.json();
       for (const [key, value] of Object.entries(data?.big_seven_info as Record<string, { stock_history: StockHistory, stock_news: NewsItem[] }>)) {
         stock_history.set(key, value.stock_history);

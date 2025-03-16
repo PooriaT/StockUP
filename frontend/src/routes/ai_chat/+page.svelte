@@ -3,6 +3,7 @@
     import DOMPurify from 'dompurify';
     import './ai_chat.css';
     import '../../app.css';
+    import { BACKEND_API_BASE_URL } from '$lib/config';
   
     interface AIResponse {
         response: string;
@@ -29,14 +30,14 @@
       isLoading = true;
       
       try {
-        const infoResponse = await fetch(`http://0.0.0.0:8000/stock/${symbol}`);
+        const infoResponse = await fetch(`${BACKEND_API_BASE_URL}/stock/${symbol}`);
         const stockData = await infoResponse.json();
         if (!('longName' in stockData.stock_general_info)) {
           throw new Error('Invalid stock symbol');
         }
         stockInfo = stockData;
 
-        const response = await fetch(`http://0.0.0.0:8000/ai_chatbot/${symbol}`, {
+        const response = await fetch(`${BACKEND_API_BASE_URL}/ai_chatbot/${symbol}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'text/plain',

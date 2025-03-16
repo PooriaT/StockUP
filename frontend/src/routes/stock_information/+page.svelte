@@ -3,6 +3,8 @@
   import StockCharts from '$lib/components/StockCharts.svelte';
   import './stock_information.css';
   import '../../app.css';
+  import { BACKEND_API_BASE_URL } from '$lib/config';
+
 
   interface StockHistory {
         Open: Record<string, number>;
@@ -83,7 +85,7 @@
 
   async function fetchStock() {
     try {
-      const response = await fetch(`http://0.0.0.0:8000/stock/${symbol}`);
+      const response = await fetch(`${BACKEND_API_BASE_URL}/stock/${symbol}`);
       if (!response.ok) {
         stockData = null;
         alert("Error fetching stock data");
