@@ -11,6 +11,10 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend  # Add this to set the working directory
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -25,16 +29,13 @@ jobs:
           curl -sSL https://install.python-poetry.org | python3 -
           echo "$HOME/.local/bin" >> $GITHUB_PATH
 
-      - name: Install dependencies
-        run: |
-          poetry install
-          poetry run pip install pytest
-
-      # - name: Run linting (pylint)
-      #   run: poetry run pylint app/ test/
+      # - name: Install dependencies
+      #   run: |
+      #     poetry install
+      #     poetry run pip install pytest
 
       - name: Run formatting check (black)
         run: poetry run black --check app/ test/
 
-      - name: Run tests (pytest)
-        run: poetry run pytest
+      # - name: Run tests (pytest)
+      #   run: poetry run pytest

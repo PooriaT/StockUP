@@ -4,6 +4,7 @@
   import DOMPurify from 'dompurify';
   import './general_ai_analysis.css';
   import '../../app.css';
+  import { BACKEND_API_BASE_URL } from '$lib/config';
 
   interface AIResponse {
         response: string;
@@ -29,13 +30,13 @@
     isLoading = true;
     
     try {
-      const infoResponse = await fetch(`http://0.0.0.0:8000/stock/${symbol}`);
+      const infoResponse = await fetch(`${BACKEND_API_BASE_URL}/stock/${symbol}`);
       const stockData = await infoResponse.json();
       if (!('longName' in stockData.stock_general_info)) {
         throw new Error('Invalid stock symbol');
       }
       stockInfo = stockData;
-      const response = await fetch(`http://0.0.0.0:8000/ai_analysis/${symbol}`);
+      const response = await fetch(`${BACKEND_API_BASE_URL}/ai_analysis/${symbol}`);
 
       if (!response.ok) {
         throw new Error('Error fetching AI analysis');

@@ -1,0 +1,1 @@
+export const BACKEND_API_BASE_URL = 'https://stockup-api-yxs5.onrender.com';
