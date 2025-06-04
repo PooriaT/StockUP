@@ -42,7 +42,7 @@ This application is for educational and research purposes only. It is not intend
 ### Backend Setup
 
 1.  Navigate to the backend directory: `cd backend`
-2.  Create a virtual environment (optional but recommended if not using Poetry's env management): `python -m venv .venv` and `source .venv/bin/activate` (or `.\.venv\Scriptsctivate` on Windows).
+2.  Create a virtual environment (optional but recommended if not using Poetry's env management): `python -m venv .venv` and `source .venv/bin/activate` (or `.\.venv\Scripts\activate` on Windows).
 3.  Install dependencies: `poetry install`
 4.  Set up environment variables:
     *   Copy `.env.example` to `.env`: `cp .env.example .env`
