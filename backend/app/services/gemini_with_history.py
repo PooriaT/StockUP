@@ -30,7 +30,7 @@ def get_gemini_response(
     {user_prompt}
     The user might provide some information about their trading strategy, their risk tolerance, or their investment goals, or
     their budgets and etc.
-    First action is to check the user prompt. If it is unrelated to the stock marker, then return some response like this:
+    First action is to check the user prompt. If it is unrelated to the stock market, then return some response like this:
     "The user prompt is not relevant to the stock market. Please provide a valid prompt."
     Otherwise, continue with the analysis.
     Based on the provided information, provide some technical analysis, fundamental analysis,
